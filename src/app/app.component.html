@@ -1,0 +1,334 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="topnav">
+  <a class="active">Login with your ADLDesigner credentials for repository connection:</a>
+  <div class="login-container">
+
+    <form  #loginForm="ngForm">
+      <input type="text" [(ngModel)]="username" placeholder="Username" name="username" required>
+      <input type="text" [(ngModel)]="password" placeholder="Password" name="password" required>
+        <input type="text" [(ngModel)]="repositoryId" placeholder="Repository ID" name="repositoryId" required>
+  <button [disabled]="!loginForm"  type="button" (click)="createauthenticationheader()">Login</button>
+     <!--   TODO   -->
+    <div *ngIf="isLoginError" class="red-text center error-message">
+    <i>Error!</i> Incorrect username, password and/or repository ID.
+</div>
+   <!--   <p>Form value: {{loginForm.value | json }}</p> -->
+    </form>
+  </div>
+</div>
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span> 
+  <strong>Attention!</strong> This page is on continuously improvement. Sometimes, it can present an inconstant behaviour.
+</div>
+
+<h1>Governance of openEHR based local repository compliant with openEHR Clinical Knowledge Manager</h1>
+<h2><div align="center">Alpha release</div></h2>
+<br>
+<div class="msa-box">
+	<a class="msa-button" href="#msa-popup1">Read Disclaimer</a>
+</div>
+
+<div id="msa-popup1" class="msa-overlay">  
+	<div class="msa-popup">
+		<h2>Disclaimer</h2>
+		<a class="msa-close" href="#">×</a>
+		<div class="msa-content">
+<p>
+MIT License
+</p><p>
+Copyright (c) 2018 Vanessa Pereira
+</p><p>
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+</p><p>
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.</p>
+<p>
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.</p>
+		</div>
+	</div>
+</div>
+<br>
+<br>
+<br>
+<h3><h2><b>Introduction</b></h2>
+<p><font color="white">The usage of online repositories is in constant growth and it can become troublesome to manage all information inside of them. Regarding a clinical knowledge repository based on openEHR artefacts, 
+  this content is based on archetypes and templates which internally have very well defined versioning parameters. <p>Although these versioning parameters can be very useful to distinguish internal changes
+   and variants of artefacts, when a project is being created and the requirements for the clinical information model are defined, archetypes are simply downloaded from the openEHR CKM and saved in the local 
+   repository of the on-going project. When new versions for the same archetypes are uploaded to the openEHR CKM, they are not updated usually on the local repository. Normally a local archetype will be updated 
+   only when a bug, error or new requirement is found during the usage of the software that contains that archetype and a check for new version is made manually on the openEHR CKM.</p></font>
+<br>
+<h2><b>How to use?</b></h2>
+ <font color="white"><p>Just simply login with your ADL Designer credentials, along with the repository id that you want to analyze (you can have an account with more than one repository inside). The page will load all the content and show the comparision between both repositories. In the <a href="#archetypesCompare">comparision section</a>, if there's an update from CKM, the URL where this archetype is available for download will show in the "URL OpenEHR CKM GitHub Mirror" column. If you already login with one account and now want to login in another account and check a diferent repository, please reload the full page. </p></font>
+<br>
+<h2><b>Why was this service created?</b></h2>
+   <font color="white"><p>One of the biggest problems of manually checking versions on openEHR CKM is that it can be really time consuming and can take several hours to complete, depending on the number of archetypes hosted on a repository. Usually checking new versions of archetypes is avoided due to the time that it consumes to be finished. Herewith this script is expected to give a quick and reliable archetype verification between the local repositories and the openEHR CKM, in order to make it compliant and updated with the main source and facilitate the managing work of the local clinical knowledge repository owner. 
+    </p></font>
+    <br>
+    <font color="white">The present script offers three options: Getting the list of archetypes or list of templates from a local repository or making the comparision between the archetypes in the local repository and the Github openEHR CKM.</font>
+    <ul style="list-style-type:disc">
+        <li><a class="custom" href="#getArchetypesList">Get Archetypes List from local repository</a></li>
+        <br>
+        <li><a class="custom" href="#archetypesCompare">Archetypes comparison from both repositories (Local repository VS OpenEHR CKM GitHub)</a></li>
+        <br>
+        <li><a class="custom" href="#getTemplatesLists">Get Templates List from local repository</a></li>
+      </ul>
+      <br> <br>
+      <b>Side note #1:<font color="white"> This script has been helping me to manage and update some local repositories with openEHR artifacts and keep them compliant with openEHR CKM, I hope it can be usefull too for who's working or dealing with the same material.</font> </b>
+      <br>
+       <br>
+      <br>
+      <hr>
+      <br>
+<h2><b> <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/alert-triangle-yellow-512.png" width="20" height="20" alt=""> More info</b></h2>
+<font color="white">  This script is a proof of concept (POC) and was made to work with Pathfinder openEHR based CKM repositories, but it can also be used for other repositories too, if connected to Marand's ADL Designer. It was made along my master thesis, entitled "Governance of openEHR based local repository compliant with openEHR Clinical Knowledge Manager" and already presented in the - <a href="https://www.openehr.org/news_events/industry_news.php?id=244" target="_blank"> Brazilian Congress of Health Informatics (CBIS 2018).</a></font>
+      <br>
+      <br>
+      <br>
+      <ul style="list-style-type:disc">
+          <li><font color="white"><a class="custom" href="http://www.marand.com/pathfinder/" target="_blank">For more information about Pathfinder, click here: http://www.marand.com/pathfinder/ </a></font> </li>
+        </ul>
+       <br>
+      <br>      
+       <br> 
+ <font color="white"> <b> There are also some issues detected due to incorrect mirroring from openEHR CKM to it's own github account, amoung others. For more information, please check the <a href="#knownIssues">"Known Issues"</a> section.</b> </font>
+ <br>
+  <br>
+ <b>Side note #2:<font color="white"> This service is currently managed and updated during my free time, if some instability or error is found during usage, please feel free to send me an email.</font> 
+      <br>
+      <br>
+      <br>
+      <br>
+      <hr>
+      <br><h3></h3>
+<div>
+<h1> <!-- ARCHETYPES LIST-->
+    <a id="getArchetypesList"></a>Get Archetypes List from local repository
+</h1>
+<br>
+</div>
+<div align="center">
+<div id="archetypeLists; let i=index">
+  <p><img src="https://i.imgur.com/obRjvsr.png" width="25" height="25" alt=""> <strong>Total archetypes:</strong> <span *ngIf="archetypeLists"> {{archetypeLists.length}}</span> </p>
+  <p><img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/alert-triangle-yellow-512.png" width="18" height="18" alt="">  <strong> Specialized archetypes: </strong> <span *ngIf="archetypeLists"> {{specializedCount}}</span></p></div>
+<div>
+    <div *ngIf="!archetypeLists">
+        <div style="text-align:center"><img src="https://svgshare.com/i/7iY.svg" /><br>Please login to load resources...</div>
+    </div> 
+<br>
+    <br>
+
+ <div *ngIf="archetypeLists">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<!-- VER CODIGO https://developer.telerik.com/topics/web-development/highlight-text-within-string-using-angular-regular-expressions/
+<div>
+    <div>
+    <input type="text" [(ngModel)]="query" placeholder="Search resource.." style="margin:auto;max-width:300px"/>
+    </div>
+    <p [innerHTML]="highlight()"></p>
+</div>
+-->
+
+<form class="example" action="/index.html" style="margin:auto;max-width:300px">
+  <input type="text" placeholder="Search resource.. " name="search">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form></div>
+
+<br>
+    <br>
+
+    <table id="archetypesTable" *ngIf="archetypeLists">  
+      <thead>
+            <tr>
+                <th>#</th> 
+                <th>Archetype Name</th>
+                <th><div class="tooltip">UID
+  <span class="tooltiptext">Unique identifier for this archetype (machine readable)</span>
+</div></th>
+                <th><div class="tooltip">MD5 Hash
+  <span class="tooltiptext"> Unique hash calculated by the actual values inside of the archetype (machine readable)</span>
+</div></th>
+                <th><div class="tooltip">Build_UID
+  <span class="tooltiptext">Unique identifier for this archetype build (machine readable)</span>
+</div></th>
+                <th>Revision</th> 
+
+            </tr>
+      </thead>
+      <tbody>
+            <tr *ngFor="let archetypes of archetypeLists; let i=index">
+                <td>{{i+1}}</td> 
+                <td> <strong> {{archetypes.archetypeId}} </strong> <p> <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/alert-triangle-yellow-512.png" width="15" height="15" alt=""> <strong> Specialized archetype from:</strong>  {{archetypes.dependsOn.archetypes || 'Not specialized'}}</p></td> 
+                <td>{{archetypes.uid}}</td>
+                <td>{{archetypes.details["MD5-CAM-1.0.1"]}}</td> 
+                <td>{{archetypes.details.build_uid || 'Not found, case of internal archetype or tagged with build_uuid parameter instead of build_uid'}}</td>
+                <td>{{archetypes?.details.revision || 'Not found' }}</td>
+              <!--   <td> <div style="text-align:center"><img src="https://i1.wp.com/struscode.com/wp-content/uploads/2017/08/head-from-gitlab-logo-small-min.png" width="45" height="45" alt=""></div><a href="https://gitlab.marand.si/ThinkRegistry/achf/ckm/raw/master/{{archetypes.path}}" target="_blank">https://gitlab.marand.si/ThinkRegistry/achf/ckm/raw/master/{{archetypes.path}}</a></td>--> 
+            </tr>
+      </tbody>
+    </table>
+ </div>
+ <br>
+ <br>
+ <hr>
+ <br>
+    <h1> <!-- ARCHETYPES COMPARISION - LOCAL REPO VS OPENEHR CKM GITHUB -->
+        <a id="archetypesCompare"></a>Archetypes comparison from both repositories (local repository VS OpenEHR CKM GitHub)
+    </h1>
+   <div align="center">
+<br>
+    <div id="archetypeLists"></div>
+    <p><img src="https://i.imgur.com/obRjvsr.png" width="25" height="25" alt=""> <strong> Total archetypes: </strong> <span *ngIf="archetypeLists"> {{archetypeLists.length}}</span> </p>
+    <p><img src="https://help.healthycities.org/hc/en-us/article_attachments/209781707/met-green-500px.png" width="19" height="19" alt=""> <strong> Compliant archetypes: </strong> <span *ngIf="archetypeLists"> {{archetypeLists.length - sumArchError}}</span></p>
+    <p><img src="https://help.healthycities.org/hc/en-us/article_attachments/209781727/not-met-red-500px.png" width="15" height="15" alt=""> <strong> Outdated archetypes/Internal archetypes: </strong> <span *ngIf="archetypeLists"> {{sumArchError}} </span></p>
+    <p><img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/alert-triangle-yellow-512.png" width="15" height="15" alt=""> <strong> Specialized archetypes: </strong> <span *ngIf="archetypeLists"> {{specializedCount}}</span></p>
+  </div>
+
+    <div>
+        <div *ngIf="!archetypeLists">
+            <div style="text-align:center"><img src="https://svgshare.com/i/7iY.svg" /><br>Please login to load resources...</div>
+        </div></div>
+        <br>
+    <br>
+
+ <div *ngIf="archetypeLists">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<form class="example" action="/index.html" style="margin:auto;max-width:300px">
+  <input type="text" placeholder="Search resource.. " name="search">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form></div>
+
+<br>
+    <br>
+    <table id="archetypesTable"  *ngIf="archetypeLists">
+      <thead>
+      <tr>
+          <th>#</th> 
+          <th>Archetype Name</th>
+                <th><div class="tooltip">UID
+  <span class="tooltiptext">Unique identifier for this archetype (machine readable)</span>
+</div></th>
+          <th>Result</th>
+          <th>URL OpenEHR CKM GitHub Mirror</th> 
+         <!--  <th>URL Internal/local repository</th>  
+          <th>Compare Archetypes</th>-->
+        </tr>
+      </thead>
+        <tr *ngFor="let arc of archetypeLists, let i=index">
+          <td>{{i+1}}</td> 
+            <td> <strong> {{arc.archetypeId}} </strong> <P> <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/alert-triangle-yellow-512.png" width="15" height="15" alt=""> <strong> Specialized archetype from:</strong>  {{arc.dependsOn.archetypes || 'Not specialized'}}</P> </td> 
+            <td>{{arc.uid}}</td>
+            <td><div style="text-align:center"><div class="teste" [innerHtml]="arc.temp_val"></div></div></td> 
+            <td><div style="text-align:center"><img src="https://i.imgur.com/pjBSPiF.png" width="25" height="25" alt=""><p><a href="{{arc.urlGithubReturn}}" target="_blank">{{ arc.urlGithubReturn || 'Compliant with openEHR CKM.'}}</a></p></div></td> 
+          <!--  <td><div style="text-align:center"><img src="https://i1.wp.com/struscode.com/wp-content/uploads/2017/08/head-from-gitlab-logo-small-min.png" width="45" height="45" alt=""><p><a href="https://gitlab.marand.si/ThinkRegistry/achf/ckm/raw/master/{{arc.path}}" target="_blank">https://gitlab.marand.si/ThinkRegistry/achf/ckm/raw/master/{{arc.path}}</a></p></div></td>
+           <td><button (click)="listCommitsByFileGH('local/archetypes/entry/observation/openEHR-EHR-OBSERVATION.blood_pressure.v1.adl')">Click to compare</button> </td>-->
+        </tr>
+      </table>
+  </div>
+  <hr>
+  <br>
+  <br>
+  <h1> <!-- TEMPLATES LIST-->
+    <a id="getTemplatesLists"></a>Get templates list from local repository and dependent archetypes
+  </h1>
+  <br>
+<div align="center">
+  <p><img src="https://i.imgur.com/obRjvsr.png" width="25" height="25" alt=""> <strong>Total templates:</strong> <span *ngIf="archetypeLists"> {{templatesLists.length}}</span> </p></div>
+  <div>
+      <div *ngIf="!templatesLists">
+          <div style="text-align:center"><img src="https://svgshare.com/i/7iY.svg" /><br>Please login to load resources...</div>
+      </div>
+      <br>
+    <br>
+
+ <div *ngIf="templatesLists">   
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+<form class="example" action="/index.html" style="margin:auto;max-width:300px">
+  <input type="text" placeholder="Search resource.. " name="search">
+  <button type="submit"><i class="fa fa-search"></i></button>
+</form></div>
+
+<br>
+    <br>
+  <table id="archetypesTable"  *ngIf="templatesLists">
+    <thead>
+    <tr>
+      <th>#</th> 
+      <th>Template Name</th>
+                <th><div class="tooltip">UID
+  <span class="tooltiptext">Unique identifier for this template (machine readable)</span>
+</div></th>
+                <th><div class="tooltip">Depends on archetypes:
+  <span class="tooltiptext">A template is a set of archetypes.</span>
+</div></th>
+      </tr>
+    </thead>
+      <tr *ngFor="let arc of templatesLists, let i=index ">
+        <td>{{i+1}}</td> 
+          <td><strong> {{arc.templateId}}</strong> </td> 
+          <td>{{arc.uid}}</td>
+          <td>{{arc.dependsOn?.archetypes}}</td> 
+      </tr>
+    </table>
+</div>
+<div>
+</div>
+<br>
+<br>
+<br>
+<hr>
+<br>
+<a id="knownIssues">
+  <h1>
+    <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/alert-triangle-yellow-512.png" width="20" height="20" alt=""> Known major issues:
+  </h1>
+  <h3> 
+    <br>
+<font color="white"><ul style="list-style-type:disc">
+     <li>The script needs to be connected to ADL Designer for proper working. If the openEHR artefacts repository is not connected to ADL designer, it will not work.</li>
+     <li>If you want to login and check a diferent repository, please reload the full page. There are some cache issues in the summary comparision that needs to be fixed.</li>
+    <li> Searching tabs are not working yet. Please use CTRL+F for searching archetype or template (will be fixed soon.) </li>
+     </ul></font>
+<br>
+ <p><font color="white">Currently the comparision is made by "archetype_id" + "major version" and made from the local repository to the openEHR ckm mirror. Although it is working fine, is not 100% realible due to a not so well done mirroring from the openEHR CKM and openEHR CKM mirror GitHub account (mistakes can always happen). Some issues have been found during the development, such as:</font></p>
+        <font color="white"><ul style="list-style-type:disc">
+    <li>Regarding the <a href="https://www.openehr.org/news_events/industry_news.php?id=244" target="_blank">openEHR CKM</a>, some archetypes exist on this platform, but have not being mirrored correctly to the GitHub repository. Some cases are the "openEHR-EHR-CLUSTER.healthcare_provider_parent.v1" and "openEHR-EHR-CLUSTER.address_isa.v1". This will provoke the script to interpret them as an internal archetype, since it cannot be found on github. If these cases are corrected in the future, the script will correctly process them.</li>
+    <li>Archetypes that got a change in the name (archetype_id), but the archetype content stills the same. Case of openEHR-EHR-OBSERVATION.indirect_oximetry.v1 that was downloaded to the local repository and a posteriori changed on openEHR CKM to openEHR-EHR-OBSERVATION.pulse_oximetry.v1. This case will be interpreted by the script as an internal archetype.</li>
+ </ul></font></h3>
+  <br>
+  <br>
+  <hr>
+<h1>In association with: </h1>
+        <div style="text-align:center"><p>
+        <img src="https://i.imgur.com/7QHXxyK.png" width="250" height="150" /> 
+        <br> Faculdade de Medicina da Universidade do Porto (Porto, Portugal)
+        <br>
+        <br>
+        <br>
+        <img src="https://i.imgur.com/ovNhkHP.png" width="250" height="100" />
+        <br> 
+        <br>Marand d.o.o. (Ljubljana, Slovenia) </p></div>
+<br>         <br>
+        <br>
+        <br>
+        <br>
+        <div class="footer">
+  <p><b> For more info, contact:</b> Vanessa Pereira - <b>E-mail:</b> up201608624[at]med.up.pt</p>
+</div>
+
