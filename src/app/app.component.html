@@ -5,7 +5,7 @@
 
     <form  #loginForm="ngForm">
       <input type="text" [(ngModel)]="username" placeholder="Username" name="username" required>
-      <input type="text" [(ngModel)]="password" placeholder="Password" name="password" required>
+      <input type="password" [(ngModel)]="password" placeholder="Password" name="password" required>
         <input type="text" [(ngModel)]="repositoryId" placeholder="Repository ID" name="repositoryId" required>
   <button [disabled]="!loginForm"  type="button" (click)="createauthenticationheader()">Login</button>
      <!--   TODO   -->
@@ -70,6 +70,7 @@ SOFTWARE.</p>
 <br>
 <h2><b>How to use?</b></h2>
  <font color="white"><p>Just simply login with your ADL Designer credentials, along with the repository id that you want to analyze (you can have an account with more than one repository inside). The page will load all the content and show the comparision between both repositories. In the <a href="#archetypesCompare">comparision section</a>, if there's an update from CKM, the URL where this archetype is available for download will show in the "URL OpenEHR CKM GitHub Mirror" column. If you already login with one account and now want to login in another account and check a diferent repository, please reload the full page. </p></font>
+<br>
 <br>
 <h2><b>Why was this service created?</b></h2>
    <font color="white"><p>One of the biggest problems of manually checking versions on openEHR CKM is that it can be really time consuming and can take several hours to complete, depending on the number of archetypes hosted on a repository. Usually checking new versions of archetypes is avoided due to the time that it consumes to be finished. Herewith this script is expected to give a quick and reliable archetype verification between the local repositories and the openEHR CKM, in order to make it compliant and updated with the main source and facilitate the managing work of the local clinical knowledge repository owner. 
@@ -311,6 +312,12 @@ SOFTWARE.</p>
     <li>Regarding the <a href="https://www.openehr.org/news_events/industry_news.php?id=244" target="_blank">openEHR CKM</a>, some archetypes exist on this platform, but have not being mirrored correctly to the GitHub repository. Some cases are the "openEHR-EHR-CLUSTER.healthcare_provider_parent.v1" and "openEHR-EHR-CLUSTER.address_isa.v1". This will provoke the script to interpret them as an internal archetype, since it cannot be found on github. If these cases are corrected in the future, the script will correctly process them.</li>
     <li>Archetypes that got a change in the name (archetype_id), but the archetype content stills the same. Case of openEHR-EHR-OBSERVATION.indirect_oximetry.v1 that was downloaded to the local repository and a posteriori changed on openEHR CKM to openEHR-EHR-OBSERVATION.pulse_oximetry.v1. This case will be interpreted by the script as an internal archetype.</li>
  </ul></font></h3>
+   <br>
+  <br>
+ <h2><b>There is any documentation to explain how this script is working?</b></h2>
+<font color="white">I really, really know that not having documentation can be painfull, but I am working on it. It will be available soon under my <a href="https://github.com/vanessa-pereira/openEHR-compliance-script" target="_blank">GitHub account</a>. I'm also waiting to have my thesis freely published, to use some excerpts from it.</font>
+  <br>
+  <br>
   <br>
   <br>
   <hr>
@@ -329,6 +336,8 @@ SOFTWARE.</p>
         <br>
         <br>
         <div class="footer">
-  <p><b> For more info, contact:</b> Vanessa Pereira - <b>E-mail:</b> up201608624[at]med.up.pt</p>
+  <p><b> For more info, contact:</b> Vanessa Pereira - <b>E-mail:</b> up201608624[at]med.up.pt  <!--<a href="https://twitter.com/VanessapPT"><img src="https://fountainhillcenter.org/wp-content/uploads/twitter.png" width="15" height="15" alt="Follow me on Twitter"></a> 
+            <a href="https://www.linkedin.com/in/vanessa-pereira-95b22949/"> <img src="https://www.edigitalagency.com.au/wp-content/uploads/new-linkedin-logo-png-transparent-background.png" width="15" height="15" alt=""></a>
+	     <a href="https://vanessa-pereira.github.io/about"> <img src="https://www.freeiconspng.com/uploads/github-logo-icon-30.png" width="17" height="17" alt=""></a></p>--><p>
 </div>
 
