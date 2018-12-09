@@ -32,6 +32,7 @@ export class APIResponse {
     sumArchError;
     sumArchOK : number;
     temp_val;
+    languages;
 
 
   }
@@ -48,6 +49,7 @@ export class APIResponse {
     archetypes;
     name: string;
     temp_val;
+    languages;
 
   }
 

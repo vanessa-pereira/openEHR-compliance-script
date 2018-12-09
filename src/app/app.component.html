@@ -1,3 +1,5 @@
+<!doctype html>
+<title>OpenEHR CKM compliance checker</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <div class="topnav">
   <a class="active">Login with your ADLDesigner credentials for repository connection:</a>
@@ -9,7 +11,11 @@
         <input type="text" [(ngModel)]="repositoryId" placeholder="Repository ID" name="repositoryId" required>
   <button [disabled]="!loginForm"  type="button" (click)="createauthenticationheader()">Login</button>
      <!--   TODO   -->
-    <div *ngIf="isLoginError" class="red-text center error-message">
+         <div *ngIf="loginForm" class="red-text center error-message">
+    Insert all required inputs and click on login button - pressing enter key is not currently working.
+</div>
+    <div *ngIf="!loginForm" class="red-text center error-message">
+      {{loginError | json }} {{errorMessage | json }}
     <i>Error!</i> Incorrect username, password and/or repository ID.
 </div>
    <!--   <p>Form value: {{loginForm.value | json }}</p> -->
@@ -22,7 +28,56 @@
 </div>
 
 <h1>Governance of openEHR based local repository compliant with openEHR Clinical Knowledge Manager</h1>
-<h2><div align="center">Alpha release</div></h2>
+<h2><div align="center">Alpha release <div class="msa-box">
+	<a class="" href="#msa-popup2"><h3><div align="center">(v. 1.0.4)</div></h3></a>
+</div><br></div></h2>
+
+<div id="msa-popup2" class="msa-overlay">  
+	<div class="msa-popup">
+		<h2># Changelog</h2>
+		<a class="msa-close" href="#">×</a>
+		<div class="msa-content">
+<p>
+All notable changes to this project will be documented in this popup.
+<p>
+The format is based on [Keep a Changelog] (https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning] (https://semver.org/spec/v2.0.0.html).
+<p><br>
+<br>
+## [1.0.4] - 2018-12-07
+<p>
+### Added
+<ul style="list-style-type:disc">
+     <li>Start versioning based change log. </li>
+     <li>Column with the information of available language translations in the archetypes and templates presented in the local repository. </li>
+      <li>Maintenance page to alert when work is being done on the service. (So much better then getting those angular report errors). </li>
+     </ul>
+<br>
+### Changed
+<p>
+  <ul style="list-style-type:disc">
+     <li>Fixed typos and improvement of information on "how to use?" section.</li>
+     </ul>
+<br>
+### Removed
+<p>
+    <ul style="list-style-type:disc">
+     <li>Table section with the MD5-CAM-1.0.1 information for the archetypes in the local repository (substituted by translations).</li>
+     </ul>
+<br>
+### To be done
+<p>
+  <ul style="list-style-type:disc">
+     <li>Information about authetication success. (currently displayed on the console)</li>
+     <li>Fix the press "enter" key bug, after inserting the credentials to login. Currently only works if the "login" button is clicked.</li>
+     <li>Print button to allow printing the desired lists.</li>
+     <li>Fix search list button.</li>
+     <li>Comparision of archetypes from the openEHR incubators.</li>
+     </ul>
+<br>
+		</div>
+	</div>
+</div>
 <br>
 <div class="msa-box">
 	<a class="msa-button" href="#msa-popup1">Read Disclaimer</a>
@@ -69,8 +124,12 @@ SOFTWARE.</p>
    only when a bug, error or new requirement is found during the usage of the software that contains that archetype and a check for new version is made manually on the openEHR CKM.</p></font>
 <br>
 <h2><b>How to use?</b></h2>
- <font color="white"><p>Just simply login with your ADL Designer credentials, along with the repository id that you want to analyze (you can have an account with more than one repository inside). The page will load all the content and show the comparision between both repositories. In the <a href="#archetypesCompare">comparision section</a>, if there's an update from CKM, the URL where this archetype is available for download will show in the "URL OpenEHR CKM GitHub Mirror" column. If you already login with one account and now want to login in another account and check a diferent repository, please reload the full page. </p></font>
-<br>
+ <font color="white"><p>Just simply login with your ADL Designer credentials, along with the repository id that you want to analyze (you can have an account with more than one repository inside). The page will load all the content and show the comparision between both repositories. In the <a href="#archetypesCompare">comparision section</a>, if there's an update from CKM, the URL where this archetype is available for download will show in the "URL OpenEHR CKM GitHub Mirror" column. 
+ <font color="white"><ul style="list-style-type:disc">
+     <li>After writing your ADL Designer credentials, just click once in the login button. Otherwise the summary comparision can present wrong values. Scroll down and the list of resources will appear. </li>
+     <li>If you are already logged in with one account and now want to login in another account or check a diferent repository, please reload the full page. </li>
+     </ul></font>
+<br></font>
 <br>
 <h2><b>Why was this service created?</b></h2>
    <font color="white"><p>One of the biggest problems of manually checking versions on openEHR CKM is that it can be really time consuming and can take several hours to complete, depending on the number of archetypes hosted on a repository. Usually checking new versions of archetypes is avoided due to the time that it consumes to be finished. Herewith this script is expected to give a quick and reliable archetype verification between the local repositories and the openEHR CKM, in order to make it compliant and updated with the main source and facilitate the managing work of the local clinical knowledge repository owner. 
@@ -85,7 +144,7 @@ SOFTWARE.</p>
         <li><a class="custom" href="#getTemplatesLists">Get Templates List from local repository</a></li>
       </ul>
       <br> <br>
-      <b>Side note #1:<font color="white"> This script has been helping me to manage and update some local repositories with openEHR artifacts and keep them compliant with openEHR CKM, I hope it can be usefull too for who's working or dealing with the same material.</font> </b>
+      <b>Side note #1:<font color="white"> This script has been helping me to manage and update some local repositories with openEHR artifacts and keep them compliant with openEHR CKM - I hope it can be usefull too for who's working or dealing with the same material.</font> </b>
       <br>
        <br>
       <br>
@@ -102,7 +161,7 @@ SOFTWARE.</p>
        <br>
       <br>      
        <br> 
- <font color="white"> <b> There are also some issues detected due to incorrect mirroring from openEHR CKM to it's own github account, amoung others. For more information, please check the <a href="#knownIssues">"Known Issues"</a> section.</b> </font>
+ <font color="white"> <b> There are also some issues detected while using this service. For more information, please check the <a href="#knownIssues">"Known Issues"</a> section.</b> </font>
  <br>
   <br>
  <b>Side note #2:<font color="white"> This service is currently managed and updated during my free time, if some instability or error is found during usage, please feel free to send me an email.</font> 
@@ -151,12 +210,15 @@ SOFTWARE.</p>
     <br>
 
     <table id="archetypesTable" *ngIf="archetypeLists">  
+      <div id="print-section"> 
       <thead>
             <tr>
                 <th>#</th> 
                 <th>Archetype Name</th>
                 <th><div class="tooltip">UID
   <span class="tooltiptext">Unique identifier for this archetype (machine readable)</span>
+</div></th>
+<th><div class="tooltip">Translations [ISO_639-1]<span class="tooltiptext">Available language translations for this archetype</span>
 </div></th>
                 <th><div class="tooltip">MD5 Hash
   <span class="tooltiptext"> Unique hash calculated by the actual values inside of the archetype (machine readable)</span>
@@ -173,12 +235,17 @@ SOFTWARE.</p>
                 <td>{{i+1}}</td> 
                 <td> <strong> {{archetypes.archetypeId}} </strong> <p> <img src="https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/alert-triangle-yellow-512.png" width="15" height="15" alt=""> <strong> Specialized archetype from:</strong>  {{archetypes.dependsOn.archetypes || 'Not specialized'}}</p></td> 
                 <td>{{archetypes.uid}}</td>
+                <td>{{archetypes.languages}}</td>
                 <td>{{archetypes.details["MD5-CAM-1.0.1"]}}</td> 
                 <td>{{archetypes.details.build_uid || 'Not found, case of internal archetype or tagged with build_uuid parameter instead of build_uid'}}</td>
                 <td>{{archetypes?.details.revision || 'Not found' }}</td>
               <!--   <td> <div style="text-align:center"><img src="https://i1.wp.com/struscode.com/wp-content/uploads/2017/08/head-from-gitlab-logo-small-min.png" width="45" height="45" alt=""></div><a href="https://gitlab.marand.si/ThinkRegistry/achf/ckm/raw/master/{{archetypes.path}}" target="_blank">https://gitlab.marand.si/ThinkRegistry/achf/ckm/raw/master/{{archetypes.path}}</a></td>--> 
             </tr>
-      </tbody>
+      </tbody></div>
+      <!--  <button 
+          printTitle="Archetypes List from local repository"  
+          printSectionId="print-section" 
+           ngxPrint>Print archetypes list</button>   -->
     </table>
  </div>
  <br>
@@ -275,6 +342,8 @@ SOFTWARE.</p>
                 <th><div class="tooltip">UID
   <span class="tooltiptext">Unique identifier for this template (machine readable)</span>
 </div></th>
+<th><div class="tooltip">Translations [ISO_639-1]<span class="tooltiptext">Available language translations for this template</span>
+</div></th>
                 <th><div class="tooltip">Depends on archetypes:
   <span class="tooltiptext">A template is a set of archetypes.</span>
 </div></th>
@@ -284,6 +353,7 @@ SOFTWARE.</p>
         <td>{{i+1}}</td> 
           <td><strong> {{arc.templateId}}</strong> </td> 
           <td>{{arc.uid}}</td>
+          <td>{{arc.languages}}</td>
           <td>{{arc.dependsOn?.archetypes}}</td> 
       </tr>
     </table>
@@ -307,9 +377,11 @@ SOFTWARE.</p>
     <li> Searching tabs are not working yet. Please use CTRL+F for searching archetype or template (will be fixed soon.) </li>
      </ul></font>
 <br>
- <p><font color="white">Currently the comparision is made by "archetype_id" + "major version" and made from the local repository to the openEHR ckm mirror. Although it is working fine, is not 100% realible due to a not so well done mirroring from the openEHR CKM and openEHR CKM mirror GitHub account (mistakes can always happen). Some issues have been found during the development, such as:</font></p>
+ <p><font color="white">Currently the comparision is made by "archetype_id" + "major version" and made from the local repository to the openEHR CKM github mirror. Although it is working fine, is not 100% realible due to having archetypes in openEHR CKM that can be located in diferent subdomains, projects and incubators. For now, this script is only getting information from the main repository (openEHR CKM) and not from the other cases. Some issues have been found during the development, such as:</font></p>
         <font color="white"><ul style="list-style-type:disc">
-    <li>Regarding the <a href="https://www.openehr.org/news_events/industry_news.php?id=244" target="_blank">openEHR CKM</a>, some archetypes exist on this platform, but have not being mirrored correctly to the GitHub repository. Some cases are the "openEHR-EHR-CLUSTER.healthcare_provider_parent.v1" and "openEHR-EHR-CLUSTER.address_isa.v1". This will provoke the script to interpret them as an internal archetype, since it cannot be found on github. If these cases are corrected in the future, the script will correctly process them.</li>
+    <li>Regarding the <a href="https://www.openehr.org/news_events/industry_news.php?id=244" target="_blank">openEHR CKM</a>, some archetypes exists in the main project (openEHR CKM) and others can come from other small projects or incubators. Examples of these cases can be the archetypes: "openEHR-EHR-CLUSTER.healthcare_provider_parent.v1" or "openEHR-EHR-CLUSTER.address_isa.v1". This will provoke the script to interpret them as an internal archetype, since it cannot be found on the main "local" folder on Github. If these cases are merged in the future from the incubators or projects to the main folder, the script will correctly process them.
+I'm planning in the future to add the possibility to compare these archetypes from all the other cases mentioned above.</li>
+<p>
     <li>Archetypes that got a change in the name (archetype_id), but the archetype content stills the same. Case of openEHR-EHR-OBSERVATION.indirect_oximetry.v1 that was downloaded to the local repository and a posteriori changed on openEHR CKM to openEHR-EHR-OBSERVATION.pulse_oximetry.v1. This case will be interpreted by the script as an internal archetype.</li>
  </ul></font></h3>
    <br>
@@ -321,7 +393,9 @@ SOFTWARE.</p>
   <br>
   <br>
   <hr>
-<h1>In association with: </h1>
+  <br>
+  <br>
+<h1>Created in association with: </h1>
         <div style="text-align:center"><p>
         <img src="https://i.imgur.com/7QHXxyK.png" width="250" height="150" /> 
         <br> Faculdade de Medicina da Universidade do Porto (Porto, Portugal)
@@ -334,10 +408,15 @@ SOFTWARE.</p>
 <br>         <br>
         <br>
         <br>
+        <div style="text-align:center"><a href="https://info.flagcounter.com/v6F9"><img src="https://s01.flagcounter.com/count/v6F9/bg_FFFFFF/txt_000000/border_CCCCCC/columns_4/maxflags_12/viewers_0/labels_0/pageviews_1/flags_0/percent_0/" alt="Flag Counter" border="0"></a></div>
+        <br>
+        <br>
+        <br>
+        <br>
         <br>
         <div class="footer">
-  <p><b> For more info, contact:</b> Vanessa Pereira - <b>E-mail:</b> up201608624[at]med.up.pt  <!--<a href="https://twitter.com/VanessapPT"><img src="https://fountainhillcenter.org/wp-content/uploads/twitter.png" width="15" height="15" alt="Follow me on Twitter"></a> 
+  <p><b> For more info, contact:</b> Vanessa Pereira - <b>E-mail:</b> up201608624[at]med.up.pt  <a href="https://twitter.com/VanessapPT"><img src="https://fountainhillcenter.org/wp-content/uploads/twitter.png" width="15" height="15" alt="Follow me on Twitter"></a> 
             <a href="https://www.linkedin.com/in/vanessa-pereira-95b22949/"> <img src="https://www.edigitalagency.com.au/wp-content/uploads/new-linkedin-logo-png-transparent-background.png" width="15" height="15" alt=""></a>
-	     <a href="https://vanessa-pereira.github.io/about"> <img src="https://www.freeiconspng.com/uploads/github-logo-icon-30.png" width="17" height="17" alt=""></a></p>--><p>
+	     <a href="https://vanessa-pereira.github.io/about"> <img src="https://www.freeiconspng.com/uploads/github-logo-icon-30.png" width="17" height="17" alt=""></a></p><p>
 </div>
 

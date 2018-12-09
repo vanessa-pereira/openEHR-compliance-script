@@ -422,6 +422,16 @@ mark {
   cursor: pointer;
   transition: all 0.msa-3s ease-out;
 }
+
+.msa-button2 {
+  font-size: 15px;
+  padding: 10px;
+  color: #7b909a;
+  border: solid #CECECE;
+  cursor: pointer;
+  transition: all 0.msa-3s ease-out;
+}
+
 .msa-button:hover {
   background-color: red;
 }

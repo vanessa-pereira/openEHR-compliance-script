@@ -33,7 +33,7 @@ getArchetypesListAdlDesigner(username: string, password:string, repositoryId:str
     headers.append('Authorization', `Basic ${token}`);
     return this.http.get('https://ehrscape.marand.si/designerv2srv/api/repository/entry/list?repositoryId=' + repositoryId + '&cache=false&type=archetype&depth=-1' , {headers: headers})
                         .map((res) => this.extractDataFromLists(res).json())
-                        .catch((err) => this.handleError(err));
+                        .catch((err) => this.loginError(err));
                             
       }
  
@@ -45,7 +45,7 @@ getTemplatesListAdlDesigner(username: string, password:string, repositoryId:stri
     headers.append('Authorization', `Basic ${token}`);
     return this.http.get('https://ehrscape.marand.si/designerv2srv/api/repository/entry/list?repositoryId=' + repositoryId + '&cache=false&type=template&depth=-1' , {headers: headers})
                         .map((res) => this.extractDataFromLists(res).json())
-                        .catch((err) => this.handleError(err));
+                        .catch((err) => this.loginError(err));
                         
       }
 
@@ -63,6 +63,14 @@ private extractDataFromLists(res: Response | any){
 
 private handleError (error: Response | any) {
     let errMsg = error.message || 'Server error';
+    console.error(errMsg); // log to console instead
+    return Observable.throw(errMsg);
+  }
+
+
+
+private loginError (error: Response | any) {
+    let errMsg = error.message || 'Wrong credentials or repositoryID';
     console.error(errMsg); // log to console instead
     return Observable.throw(errMsg);
   }
